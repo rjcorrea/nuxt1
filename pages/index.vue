@@ -18,6 +18,19 @@
           Welcome to the Vuetify + Nuxt.js template
         </v-card-title>
         <v-card-text>
+          <div v-if="$auth.loggedIn">
+            {{ $auth.user.email }}
+            <v-btn @click="logout">
+              <v-icon>mdi-account</v-icon>
+              Logout
+            </v-btn>
+          </div>
+
+          <div v-else>
+            <v-btn @click="login">
+              Login
+            </v-btn>
+          </div>
           <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
           <p>
             For more information on Vuetify, check out the <a
@@ -87,6 +100,19 @@ export default {
   components: {
     Logo,
     VuetifyLogo
+  },
+  methods: {
+    login () {
+      this.$auth.loginWith('local', {
+        data: {
+          email: 'rjcor21@gmail.com',
+          password: 'password'
+        }
+      })
+    },
+    logout () {
+      this.$auth.logout()
+    }
   }
 }
 </script>
